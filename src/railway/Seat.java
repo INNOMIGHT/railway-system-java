@@ -33,12 +33,7 @@ public class Seat {
     }
 
     public void book(User user) {
-        if (!isBooked()) {
-            this.user = user;
-            // You can implement the logic to calculate the seat price here
-        } else {
-            throw new RuntimeException("Seat " + seatNumber + " is already booked.");
-        }
+        this.user = user;
     }
 
     public void cancelBooking() {
@@ -48,5 +43,9 @@ public class Seat {
         } else {
             throw new RuntimeException("Seat " + seatNumber + " is not booked.");
         }
+    }
+
+    public boolean isOfType(SeatType seatTypePreference) {
+        return this.seatType == seatTypePreference;
     }
 }

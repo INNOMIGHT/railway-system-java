@@ -6,19 +6,19 @@ import java.util.List;
 public class TrainSystem {
     private static TrainSystem instance;
     private final ArrayList<Train> trains;
-    private final Booking booking;
+    private final TicketBooth ticketBooth;
 
 
-    private TrainSystem(Booking booking) { /* Constructor logic */
+    private TrainSystem(TicketBooth ticketBooth) { /* Constructor logic */
         this.trains = new ArrayList<>();
-        this.booking = booking;
+        this.ticketBooth = ticketBooth;
     }
 
 
 
-    public static TrainSystem getInstance() {
+    public static TrainSystem getInstance(TicketBooth ticketBooth) {
         if (instance == null) {
-            instance = new TrainSystem();
+            instance = new TrainSystem(ticketBooth);
         }
         return instance;
     }
@@ -42,8 +42,10 @@ public class TrainSystem {
         return trains;
     }
 
-    public Ticket bookTicket(User user){
+    public BookingInfo bookSeat(User user, Train selectedTrain){
+        Seat bookedSeat = ticketBooth.bookSeat(user, selectedTrain);
+        double ticketPrice = ticketBooth.calculatePrice(bookedSeat);
 
-        booking.bookSeat(user);
+        return BookingInfo.newInstance(selectedTrain, bookedSeat, ticketPrice);
     }
 }
